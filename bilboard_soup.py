@@ -5,12 +5,12 @@ from bs4 import BeautifulSoup
 
 def bilboard_crawl() :
 	
-	crwaling_url = "https://www.billboard.com/charts/hot-100"
-	req = requests.get(crwaling_url)
+	URL = "https://www.billboard.com/charts/hot-100"
+	req = requests.get(URL)
 	html = req.text
 	soup = BeautifulSoup(html, 'html.parser')
 
-	file = open('bilboard.csv',mode='w',encoding='UTF-8',newline='')
+	file = open('bilboard_soup.csv',mode='w',encoding='UTF-8',newline='')
 	writer = csv.writer(file)
 	writer.writerow(['rank','title','artist','last_week','peak','duration'])
 
@@ -25,3 +25,5 @@ def bilboard_crawl() :
 		duration = song.find('span',{'class' : 'chart-element__meta text--center color--secondary text--week'}).string
 		
 		writer.writerow((rank,title,artist,last_week,peak,duration))
+
+bilboard_crawl()
